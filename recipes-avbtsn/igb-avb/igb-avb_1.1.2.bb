@@ -4,10 +4,12 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://kmod/LICENSE;md5=e2c0cd0820d168b0b26e19f13df4dc56"
 DEPENDS = "virtual/kernel"
 
+SRCREV_machine = "f403012627524a21fd0cf463ecdb351ae0291014"
 
-SRC_URI = "https://github.com/frankie-zeng/igb-avb/archive/refs/tags/v${PV}.tar.gz \
+SRC_URI = "git://github.com/frankie-zeng/igb-avb.git;name=machine;branch=master;protocol=https \
 		  file://0001-change-vsp-csp.patch \
 		  "
+S = "${WORKDIR}/git"
 
 SRC_URI[md5sum] = "96d9ea1578162929c30b48e6813227ff"
 
@@ -36,6 +38,8 @@ do_compile() {
 		   KSRC=${STAGING_KERNEL_DIR} \
 		   KOBJ=${STAGING_KERNEL_BUILDDIR} \
 	           O=${STAGING_KERNEL_BUILDDIR} 
+	cd ../lib
+	oe_runmake
 }
 
 do_install() {
@@ -59,6 +63,12 @@ do_install() {
 		# clear them out to avoid confusion
 		sed -e 's:${B}/::g' -i ${D}${includedir}/${BPN}/Module.symvers
 	fi
+	install -d ${D}${includedir}
+	install -c -m 0644 ${B}/lib/igb.h ${D}${includedir}/igb.h
+	
+	install -d ${D}${libdir}
+	install -c -m 0644 ${B}/lib/libigb.a ${D}${libdir}/libigb.a
+	
 }
 
 

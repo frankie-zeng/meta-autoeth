@@ -1,12 +1,11 @@
-From 4cc100dddb5d3c8fc2e2efc075cacf46fcd711e3 Mon Sep 17 00:00:00 2001
+From 2463503b21d2176334eb6c6257bb1a9ee3de0c79 Mon Sep 17 00:00:00 2001
 From: Frankie Zeng <frankie.zengfu@gmail.com>
-Date: Tue, 29 Mar 2022 11:26:39 +0000
-Subject: [PATCH] patch for yocto
+Date: Sat, 2 Apr 2022 02:06:49 +0000
+Subject: [PATCH] change vsp csp
 
 ---
- kmod/Makefile      | 33 ++++++++-------------------------
- kmod/igb_ethtool.c |  2 ++
- 2 files changed, 10 insertions(+), 25 deletions(-)
+ kmod/Makefile | 33 ++++++++-------------------------
+ 1 file changed, 8 insertions(+), 25 deletions(-)
 
 diff --git a/kmod/Makefile b/kmod/Makefile
 index e8f451b..c189406 100644
@@ -70,20 +69,6 @@ index e8f451b..c189406 100644
  # Get rid of compile warnings in kernel header files from fedora
  ifneq (,$(wildcard /etc/fedora-release))
    EXTRA_CFLAGS += -fno-strict-aliasing
-diff --git a/kmod/igb_ethtool.c b/kmod/igb_ethtool.c
-index 7d36c69..bff0998 100644
---- a/kmod/igb_ethtool.c
-+++ b/kmod/igb_ethtool.c
-@@ -3187,7 +3187,9 @@ static const struct ethtool_ops igb_ethtool_ops = {
- #ifdef HAVE_ETHTOOL_GET_PERM_ADDR
- 	.get_perm_addr          = ethtool_op_get_perm_addr,
- #endif
-+#ifdef HAVE_ETHTOOL_COALESCE_PARAMS_SUPPORT
- 	.supported_coalesce_params = ETHTOOL_COALESCE_USECS,
-+#endif
- 	.get_coalesce           = igb_get_coalesce,
- 	.set_coalesce           = igb_set_coalesce,
- #ifndef HAVE_RHEL6_ETHTOOL_OPS_EXT_STRUCT
 -- 
 2.25.1
 
