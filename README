@@ -5,23 +5,19 @@ Please see the corresponding sections below for details.
 Dependencies
 ============
 
-  URI: <first dependency>
-  branch: <branch name>
+  URI: <first meta-openembedded>
+  branch: <branch nhonisterame>
 
-  URI: <second dependency>
-  branch: <branch name>
-
-  .
-  .
-  .
+  URI: <second meta-raspberrypi>
+  branch: <branch honister>
 
 Patches
 =======
 
-Please submit any patches against the meta-autoeth layer to the xxxx mailing list (xxxx@zzzz.org)
+Please submit any patches against the meta-autoeth layer to the frankie mailing list (xxxx@zzzz.org)
 and cc: the maintainer:
 
-Maintainer: XXX YYYYYY <xxx.yyyyyy@zzzzz.com>
+Maintainer: Frankie Zeng <frankie.zengfu@gmail.com>
 
 Table of Contents
 =================
