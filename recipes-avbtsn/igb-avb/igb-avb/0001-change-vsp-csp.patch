@@ -1,0 +1,89 @@
+From 4cc100dddb5d3c8fc2e2efc075cacf46fcd711e3 Mon Sep 17 00:00:00 2001
+From: Frankie Zeng <frankie.zengfu@gmail.com>
+Date: Tue, 29 Mar 2022 11:26:39 +0000
+Subject: [PATCH] patch for yocto
+
+---
+ kmod/Makefile      | 33 ++++++++-------------------------
+ kmod/igb_ethtool.c |  2 ++
+ 2 files changed, 10 insertions(+), 25 deletions(-)
+
+diff --git a/kmod/Makefile b/kmod/Makefile
+index e8f451b..c189406 100644
+--- a/kmod/Makefile
++++ b/kmod/Makefile
+@@ -83,29 +83,16 @@ ifeq (,$(KSRC))
+   KSRC := $(firstword $(KSP))
+ endif
+ 
+-ifeq (,$(KSRC))
+-  $(warning *** Kernel header files not in any of the expected locations.)
+-  $(warning *** Install the appropriate kernel development package, e.g.)
+-  $(error kernel-devel, for building kernel modules and try again)
+-else
+-ifeq (/lib/modules/$(BUILD_KERNEL)/source, $(KSRC))
+-  KOBJ :=  /lib/modules/$(BUILD_KERNEL)/build
+-else
+-  KOBJ :=  $(KSRC)
+-endif
+-endif
+ 
+ # Version file Search Path
+-VSP :=  $(KOBJ)/build/include/generated/utsrelease.h \
+-        $(KOBJ)/build/include/linux/utsrelease.h \
+-        $(KOBJ)/build/include/linux/version.h \
+-        $(KOBJ)/build/include/generated/uapi/linux/version.h \
+-        /boot/vmlinuz.version.h
++VSP :=  $(KOBJ)/include/generated/utsrelease.h \
++        $(KOBJ)/include/linux/utsrelease.h \
++        $(KOBJ)/include/linux/version.h \
++        $(KOBJ)/include/generated/uapi/linux/version.h
+ 
+ # Config file Search Path
+-CSP :=  $(KSRC)/build/include/generated/autoconf.h \
+-        $(KSRC)/build/include/linux/autoconf.h \
+-        /boot/vmlinuz.autoconf.h
++CSP :=  $(KOBJ)/include/generated/autoconf.h \
++        $(KOBJ)/include/linux/autoconf.h
+ 
+ # prune the lists down to only files that exist
+ test_file = $(shell [ -f $(file) ] && echo $(file))
+@@ -266,11 +253,7 @@ obj-m += $(DRIVER_NAME).o
+ $(DRIVER_NAME)-objs := $(CFILES:.c=.o)
+ else
+ default:
+-ifeq ($(KOBJ),$(KSRC))
+-	$(MAKE) -C $(KSRC) M=$(shell pwd) modules
+-else
+-	$(MAKE) -C $(KSRC) O=$(KOBJ) M=$(shell pwd) modules
+-endif
++	$(MAKE) -C $(KSRC) O=${O} M=$(shell pwd) modules
+ endif
+ 
+ else # ifeq (1,$(shell [ $(KVER_CODE) -ge 132352 ] && echo 1 || echo 0))
+@@ -286,7 +269,7 @@ MANFILE = $(TARGET:.o=.$(MANSECTION))
+ ifneq (,$(wildcard /etc/SuSE-release))
+   EXTRA_CFLAGS += -Wno-sign-compare -fno-strict-aliasing
+ endif
+-
++EXTRA_CFLAGS += -Wno-implicit-fallthrough
+ # Get rid of compile warnings in kernel header files from fedora
+ ifneq (,$(wildcard /etc/fedora-release))
+   EXTRA_CFLAGS += -fno-strict-aliasing
+diff --git a/kmod/igb_ethtool.c b/kmod/igb_ethtool.c
+index 7d36c69..bff0998 100644
+--- a/kmod/igb_ethtool.c
++++ b/kmod/igb_ethtool.c
+@@ -3187,7 +3187,9 @@ static const struct ethtool_ops igb_ethtool_ops = {
+ #ifdef HAVE_ETHTOOL_GET_PERM_ADDR
+ 	.get_perm_addr          = ethtool_op_get_perm_addr,
+ #endif
++#ifdef HAVE_ETHTOOL_COALESCE_PARAMS_SUPPORT
+ 	.supported_coalesce_params = ETHTOOL_COALESCE_USECS,
++#endif
+ 	.get_coalesce           = igb_get_coalesce,
+ 	.set_coalesce           = igb_set_coalesce,
+ #ifndef HAVE_RHEL6_ETHTOOL_OPS_EXT_STRUCT
+-- 
+2.25.1
+

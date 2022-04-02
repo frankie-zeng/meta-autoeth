@@ -1,0 +1,14 @@
+LINUX_VERSION ?= "5.15.30"
+LINUX_RPI_BRANCH ?= "rpi-5.15.y"
+LINUX_RPI_KMETA_BRANCH ?= "yocto-5.15"
+
+SRCREV_machine = "5830759fc2591a3c6aad1783f14ad6efaa904a1a"
+SRCREV_meta = "fee71fc34f2e551ebfd7bf0996d82f3447787e7a"
+
+require linux-raspberrypi_5.15.inc
+
+# SRC_URI += "file://0001-Revert-selftests-bpf-Skip-perf-hw-events-test-if-the.patch \
+#             file://0002-Revert-selftests-bpf-Fix-perf_buffer-test-on-systems.patch \
+#             file://powersave.cfg \
+#             file://android-drivers.cfg \
+#            "
