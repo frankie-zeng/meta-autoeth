@@ -19,6 +19,7 @@ IMAGE_INSTALL = "\
     pciutils \
     boost \
     vsomeip \
+    libavtp \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 
