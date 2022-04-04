@@ -17,6 +17,8 @@ IMAGE_INSTALL = "\
     tcpdump \
     igb-avb \
     pciutils \
+    boost \
+    vsomeip \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 
