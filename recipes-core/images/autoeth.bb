@@ -20,6 +20,10 @@ IMAGE_INSTALL = "\
     boost \
     vsomeip \
     libavtp \
+    strongswan \
+    python3 \
+    python3-pip \
+    capicxx-someip-runtime \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 
