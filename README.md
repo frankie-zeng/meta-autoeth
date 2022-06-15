@@ -3,7 +3,7 @@ This README file contains information on the contents of the meta-autoeth layer.
 Please see the corresponding sections below for details.
 
 ## Dependencies
-============
+
   * URI: git://git.yoctoproject.org/poky
     * branch: honister
     * revision: HEAD
@@ -18,7 +18,7 @@ Please see the corresponding sections below for details.
 
 
 ## Quick Start
-============
+
 1. source poky/oe-init-build-env build
 2. Run 'bitbake-layers add-layer meta-autoeth'
 3. Run 'bitbake-layers add-layer meta-raspberrypi'
@@ -41,5 +41,5 @@ VIRTUAL-RUNTIME_init_manager = "systemd"
 8. bitbake autoeth
 
 ## Maintainers
-========
+
 * Frankie Zeng `<frankie.zeng@gmail.com>`
