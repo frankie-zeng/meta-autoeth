@@ -40,6 +40,9 @@ VIRTUAL-RUNTIME_init_manager = "systemd"
 ```
 8. bitbake autoeth
 
+## Flash Image
+
+
 ## Maintainers
 
 * Frankie Zeng `<frankie.zeng@gmail.com>`

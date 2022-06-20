@@ -10,7 +10,7 @@ IMAGE_INSTALL = "\
     packagegroup-core-boot \
     packagegroup-core-full-cmdline \
     linuxptp \
-    pps-tools \
+    ppstool \
     openssl-bin \
     openssl \
     libpcap \
@@ -23,6 +23,9 @@ IMAGE_INSTALL = "\
     strongswan \
     python3 \
     python3-pip \
+    lan867x \
+    usbutils \
+    libusb \
     capicxx-someip-runtime \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
