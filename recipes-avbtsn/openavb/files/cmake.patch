@@ -1,0 +1,19 @@
+Upstream-Status: Inappropriate [cmake]
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 88de84bf..99ecc195 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -13,9 +13,9 @@ else()
+         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+ endif()
+ 
+-add_subdirectory("thirdparty/cpputest")
+-add_subdirectory("daemons/common/tests")
+-add_subdirectory("daemons/mrpd")
++# add_subdirectory("thirdparty/cpputest")
++# add_subdirectory("daemons/common/tests")
++# add_subdirectory("daemons/mrpd")
+ add_subdirectory("daemons/maap")
+ 
+ message("

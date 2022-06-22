@@ -25,7 +25,7 @@ IMAGE_INSTALL = "\
     python3-pip \
     lan867x \
     usbutils \
-    libusb \
+    libusb1 \
     capicxx-someip-runtime \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
