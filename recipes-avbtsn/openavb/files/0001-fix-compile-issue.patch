@@ -1,0 +1,147 @@
+From b7cac6aaa1750653698a77f095a9c40e6c038927 Mon Sep 17 00:00:00 2001
+From: Frankie Zeng <frankie.zengfu@gmail.com>
+Date: Thu, 23 Jun 2022 11:36:47 +0000
+Subject: [PATCH] fix compile issue
+
+---
+ lib/avtp_pipeline/cmake/FindPCAP.cmake        | 10 +++---
+ .../platform/Linux/openavb_grandmaster_osal.c | 34 +++++++++----------
+ .../platform/Linux/openavb_tasks.h            |  4 +--
+ 3 files changed, 23 insertions(+), 25 deletions(-)
+
+diff --git a/lib/avtp_pipeline/cmake/FindPCAP.cmake b/lib/avtp_pipeline/cmake/FindPCAP.cmake
+index 2be3fe3b..4ad2492d 100644
+--- a/lib/avtp_pipeline/cmake/FindPCAP.cmake
++++ b/lib/avtp_pipeline/cmake/FindPCAP.cmake
+@@ -45,13 +45,13 @@
+ #  PCAP_FOUND       - True if pcap found.
+ 
+ 
+-IF(EXISTS $ENV{PCAPDIR})
++IF(EXISTS ${PCAPDIR})
+   FIND_PATH(PCAP_INCLUDE_DIR
+     NAMES
+     pcap/pcap.h
+     pcap.h
+     PATHS
+-      $ENV{PCAPDIR}
++      ${PCAPDIR}/include
+     NO_DEFAULT_PATH
+   )
+ 
+@@ -59,12 +59,12 @@ IF(EXISTS $ENV{PCAPDIR})
+     NAMES
+       pcap
+     PATHS
+-      $ENV{PCAPDIR}
++      ${PCAPDIR}/lib
+     NO_DEFAULT_PATH
+   )
+ 
+ 
+-ELSE(EXISTS $ENV{PCAPDIR})
++ELSE()
+   FIND_PATH(PCAP_INCLUDE_DIR
+     NAMES
+     pcap/pcap.h
+@@ -76,7 +76,7 @@ ELSE(EXISTS $ENV{PCAPDIR})
+       pcap
+   )
+ 
+-ENDIF(EXISTS $ENV{PCAPDIR})
++ENDIF()
+ 
+ SET(PCAP_INCLUDE_DIRS ${PCAP_INCLUDE_DIR})
+ SET(PCAP_LIBRARIES ${PCAP_LIBRARY})
+diff --git a/lib/avtp_pipeline/platform/Linux/openavb_grandmaster_osal.c b/lib/avtp_pipeline/platform/Linux/openavb_grandmaster_osal.c
+index 7acbf76d..3b91ae38 100644
+--- a/lib/avtp_pipeline/platform/Linux/openavb_grandmaster_osal.c
++++ b/lib/avtp_pipeline/platform/Linux/openavb_grandmaster_osal.c
+@@ -51,7 +51,7 @@ static pthread_mutex_t gOSALGrandmasterInitMutex = PTHREAD_MUTEX_INITIALIZER;
+ static bool bInitialized = FALSE;
+ static int gShmFd = -1;
+ static char *gMmap = NULL;
+-gPtpTimeData gPtpTD;
++static gPtpTimeData avdeccgPtpTD;
+ 
+ static bool x_grandmasterInit(void) {
+ 	AVB_TRACE_ENTRY(AVB_TRACE_GRANDMASTER);
+@@ -62,7 +62,7 @@ static bool x_grandmasterInit(void) {
+ 		return FALSE;
+ 	}
+ 
+-	if (gptpgetdata(gMmap, &gPtpTD) < 0) {
++	if (gptpgetdata(gMmap, &avdeccgPtpTD) < 0) {
+ 		AVB_LOG_ERROR("Grandmaster data fetch failed");
+ 		AVB_TRACE_EXIT(AVB_TRACE_GRANDMASTER);
+ 		return FALSE;
+@@ -101,14 +101,14 @@ bool osalAVBGrandmasterGetCurrent(
+ {
+ 	AVB_TRACE_ENTRY(AVB_TRACE_GRANDMASTER);
+ 
+-	if (gptpgetdata(gMmap, &gPtpTD) < 0) {
++	if (gptpgetdata(gMmap, &avdeccgPtpTD) < 0) {
+ 		AVB_LOG_ERROR("Grandmaster data fetch failed");
+ 		AVB_TRACE_EXIT(AVB_TRACE_TIME);
+ 		return FALSE;
+ 	}
+ 
+-	if (gptp_grandmaster_id != NULL) { memcpy(gptp_grandmaster_id, gPtpTD.gptp_grandmaster_id, 8); }
+-	if (gptp_domain_number != NULL) { *gptp_domain_number = gPtpTD.gptp_domain_number; }
++	if (gptp_grandmaster_id != NULL) { memcpy(gptp_grandmaster_id, avdeccgPtpTD.gptp_grandmaster_id, 8); }
++	if (gptp_domain_number != NULL) { *gptp_domain_number = avdeccgPtpTD.gptp_domain_number; }
+ 
+ 	AVB_TRACE_EXIT(AVB_TRACE_GRANDMASTER);
+ 	return TRUE;
+@@ -129,23 +129,23 @@ bool osalClockGrandmasterGetInterface(
+ {
+ 	AVB_TRACE_ENTRY(AVB_TRACE_GRANDMASTER);
+ 
+-	if (gptpgetdata(gMmap, &gPtpTD) < 0) {
++	if (gptpgetdata(gMmap, &avdeccgPtpTD) < 0) {
+ 		AVB_LOG_ERROR("Grandmaster data fetch failed");
+ 		AVB_TRACE_EXIT(AVB_TRACE_TIME);
+ 		return FALSE;
+ 	}
+ 
+-	if (clock_identity != NULL) { memcpy(clock_identity, gPtpTD.clock_identity, 8); }
+-	if (priority1 != NULL) { *priority1 = gPtpTD.priority1; }
+-	if (clock_class != NULL) { *clock_class = gPtpTD.clock_class; }
+-	if (offset_scaled_log_variance != NULL) { *offset_scaled_log_variance = gPtpTD.offset_scaled_log_variance; }
+-	if (clock_accuracy != NULL) { *clock_accuracy = gPtpTD.clock_accuracy; }
+-	if (priority2 != NULL) { *priority2 = gPtpTD.priority2; }
+-	if (domain_number != NULL) { *domain_number = gPtpTD.domain_number; }
+-	if (log_sync_interval != NULL) { *log_sync_interval = gPtpTD.log_sync_interval; }
+-	if (log_announce_interval != NULL) { *log_announce_interval = gPtpTD.log_announce_interval; }
+-	if (log_pdelay_interval != NULL) { *log_pdelay_interval = gPtpTD.log_pdelay_interval; }
+-	if (port_number != NULL) { *port_number = gPtpTD.port_number; }
++	if (clock_identity != NULL) { memcpy(clock_identity, avdeccgPtpTD.clock_identity, 8); }
++	if (priority1 != NULL) { *priority1 = avdeccgPtpTD.priority1; }
++	if (clock_class != NULL) { *clock_class = avdeccgPtpTD.clock_class; }
++	if (offset_scaled_log_variance != NULL) { *offset_scaled_log_variance = avdeccgPtpTD.offset_scaled_log_variance; }
++	if (clock_accuracy != NULL) { *clock_accuracy = avdeccgPtpTD.clock_accuracy; }
++	if (priority2 != NULL) { *priority2 = avdeccgPtpTD.priority2; }
++	if (domain_number != NULL) { *domain_number = avdeccgPtpTD.domain_number; }
++	if (log_sync_interval != NULL) { *log_sync_interval = avdeccgPtpTD.log_sync_interval; }
++	if (log_announce_interval != NULL) { *log_announce_interval = avdeccgPtpTD.log_announce_interval; }
++	if (log_pdelay_interval != NULL) { *log_pdelay_interval = avdeccgPtpTD.log_pdelay_interval; }
++	if (port_number != NULL) { *port_number = avdeccgPtpTD.port_number; }
+ 
+ 	AVB_TRACE_EXIT(AVB_TRACE_GRANDMASTER);
+ 	return TRUE;
+diff --git a/lib/avtp_pipeline/platform/Linux/openavb_tasks.h b/lib/avtp_pipeline/platform/Linux/openavb_tasks.h
+index 387fd985..ae12fb2e 100644
+--- a/lib/avtp_pipeline/platform/Linux/openavb_tasks.h
++++ b/lib/avtp_pipeline/platform/Linux/openavb_tasks.h
+@@ -36,10 +36,8 @@ https://github.com/benhoyt/inih/commit/74d2ca064fb293bc60a77b0bd068075b293cf175.
+ 
+ #if !defined(PTHREAD_STACK_MIN)
+ #error "PTHREAD_STACK_MIN variable not defined"
+-#elif (PTHREAD_STACK_MIN > 65536)
+-#define THREAD_STACK_SIZE							PTHREAD_STACK_MIN
+ #else
+-#define THREAD_STACK_SIZE							65536
++#define THREAD_STACK_SIZE							(PTHREAD_STACK_MIN > 65536?PTHREAD_STACK_MIN:65536)
+ #endif
+ 
+ ///////////////////////////
