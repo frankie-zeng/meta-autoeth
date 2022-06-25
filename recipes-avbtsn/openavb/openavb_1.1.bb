@@ -9,10 +9,10 @@ SRCREV_machine = "ff076e83234d2207f33447b9bd6d1646d9245566"
 
 SRC_URI = "git://github.com/Avnu/OpenAvnu.git;name=machine;branch=master;protocol=https \
            file://GPLv2.patch \
-           file://cmake.patch \
            file://i210_linux.cmake \
            file://i210_linux_avdecc.cmake \
            file://0001-fix-compile-issue.patch \
+           file://0001-remove-unused-build.patch \
            "
 S = "${WORKDIR}/git"
 

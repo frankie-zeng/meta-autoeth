@@ -1,16 +1,14 @@
-From 8b74742fa144582d5eda0f6efb94fbf230f2d2e1 Mon Sep 17 00:00:00 2001
-From: Frankie Zeng <frankie.zengfu@gmail.com>
-Date: Wed, 22 Jun 2022 14:48:13 +0000
-Subject: [PATCH] basic openavb build ok, modify insall next step
-
-Upstream-Status: Inappropriate [cmake]
+From 53a4f98cb871a59df577c99ff9af089c383b4153 Mon Sep 17 00:00:00 2001
+From: Frankie Zeng <frankie.zeng@nxp.com>
+Date: Fri, 24 Jun 2022 22:01:00 +0800
+Subject: [PATCH] remove unused build
 
 ---
  CMakeLists.txt | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 88de84bf..99ecc195 100644
+index 88de84bf..9c53052f 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -13,9 +13,9 @@ else()
@@ -20,9 +18,9 @@ index 88de84bf..99ecc195 100644
 -add_subdirectory("thirdparty/cpputest")
 -add_subdirectory("daemons/common/tests")
 -add_subdirectory("daemons/mrpd")
-+# add_subdirectory("thirdparty/cpputest")
-+# add_subdirectory("daemons/common/tests")
-+# add_subdirectory("daemons/mrpd")
++#add_subdirectory("thirdparty/cpputest")
++#add_subdirectory("daemons/common/tests")
++#add_subdirectory("daemons/mrpd")
  add_subdirectory("daemons/maap")
  
  message("
