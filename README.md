@@ -29,9 +29,10 @@ Please see the corresponding sections below for details.
 ```
 MACHINE = "raspberrypi4-64"
 # PI config 
-IMAGE_FSTYPES = "tar.bz2 ext4.xz ext4 wic wic.bmap"
+IMAGE_FSTYPES = "tar.bz2 ext4.xz ext4 wic wic.bmap wic.bz2"
 SDIMG_ROOTFS_TYPE = "ext4"
 ENABLE_UART = "1"
+ENABLE_DWC2_HOST = "1"
 
 # IMAGE_INSTALL_append = " kernel-modules linuxptp pps-tools openssh openssl"
 DISTRO_FEATURES:append = " systemd"
