@@ -48,7 +48,7 @@ VIRTUAL-RUNTIME_init_manager = "systemd"
 
 ## Maintainers
 
-* Frankie Zeng `<frankie.zeng@gmail.com>`
+* Frankie Zeng `<frankie.zengfu@gmail.com>`
 
 ## Board Picture
 ![board1](./doc/board1.jpg)
