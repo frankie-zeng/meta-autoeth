@@ -1,3 +1,5 @@
+# Automotvie Ethernet Platform
+
 This README file contains information on the contents of the meta-autoeth layer.
 
 Please see the corresponding sections below for details.
@@ -47,3 +49,8 @@ VIRTUAL-RUNTIME_init_manager = "systemd"
 ## Maintainers
 
 * Frankie Zeng `<frankie.zeng@gmail.com>`
+
+## Board Picture
+![board1](./doc/board1.jpg)
+![board2](./doc/board2.jpg)
+
