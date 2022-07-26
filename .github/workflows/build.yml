@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: build
-      run: 
+      run: |
         source poky/oe-init-build-env
         bitbake autoeth
       working-directory: /home/vm1/autoeth
