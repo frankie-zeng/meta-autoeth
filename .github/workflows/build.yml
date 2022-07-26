@@ -10,21 +10,11 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - uses: actions/checkout@v3
-    - name: clone poky
-      uses: actions/checkout@v3
-      with:
-        repository: git://git.yoctoproject.org/poky
-        ref: honister
-    - name: clone meta-openembedded
-      uses: actions/checkout@v3
-      with:
-        repository: https://github.com/openembedded/meta-openembedded
-        ref: honister
-    - name: clone meta-raspberrypi
-      uses: actions/checkout@v3
-      with:
-        repository: https://github.com/agherzan/meta-raspberrypi
-        ref: honister
+    - name: build
+      run: 
+        source poky/oe-init-build-env
+        bitbake autoeth
+      working-directory: /home/vm1/autoeth
+     
         
       
