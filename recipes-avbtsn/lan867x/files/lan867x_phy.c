@@ -70,8 +70,11 @@ static int config_init(struct phy_device *phydev)
 	u32 type, length, offset;
 	int ret = request_firmware_direct(&fw_p, "lan867x_config.bin", NULL);
 
-	if (ret)
-		return ret;
+	if (ret){
+		pr_warn("firmware lan867x_config.bin not found, skip init phy, use mc10baset1s.py to config phy\n");
+		return 0;
+	}
+		
 
 	phydev->speed = SPEED_10;
 	phydev->autoneg = DUPLEX_HALF;

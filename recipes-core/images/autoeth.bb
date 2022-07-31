@@ -7,6 +7,8 @@ IMAGE_FEATURES += "splash ssh-server-openssh"
 
 #     kernel-modules
 IMAGE_INSTALL = "\
+    kernel-module-dwc2 \
+    kernel-module-roles \
     packagegroup-core-boot \
     packagegroup-core-full-cmdline \
     linuxptp \
@@ -26,7 +28,10 @@ IMAGE_INSTALL = "\
     lan867x \
     usbutils \
     libusb1 \
+    python3-pyusb \
     capicxx-someip-runtime \
+    avnu-gptp \
+    mc10baset1s \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 

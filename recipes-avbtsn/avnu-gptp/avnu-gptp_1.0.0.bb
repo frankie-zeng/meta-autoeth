@@ -1,6 +1,6 @@
 SUMMARY = "The Avnu Alliance Gptp."
 HOMEPAGE = "https://github.com/Avnu/gptp"
-LICENSE = "BSD-3"
+LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=b3e2a6e620763288bcbc3190f6cb1704"
 
 DEPENDS = "igb-avb pciutils"
