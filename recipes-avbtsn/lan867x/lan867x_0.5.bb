@@ -48,7 +48,7 @@ do_install:append() {
     install -c -m 0666 cfg/plca-8-7.bin ${D}/lib/firmware/t1scfg/plca-8-7.bin
 
     install -d  ${D}${sbindir}/
-    install -c -m 0666 t1s.sh ${D}${sbindir}/t1s.sh
+    install -c -m 0755 t1s.sh ${D}${sbindir}/t1s.sh
 	
 }
 

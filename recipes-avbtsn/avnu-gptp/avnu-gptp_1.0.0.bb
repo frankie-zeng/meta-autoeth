@@ -35,7 +35,7 @@ do_compile() {
 
 do_install() {
 	install -d ${D}${bindir}/avnu
-	install -c -m 0644 ${S}/linux/build/obj/daemon_cl ${D}${bindir}/avnu/daemon_cl
+	install -c -m 0755 ${S}/linux/build/obj/daemon_cl ${D}${bindir}/avnu/daemon_cl
 }
 
 

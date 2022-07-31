@@ -32,6 +32,7 @@ IMAGE_INSTALL = "\
     capicxx-someip-runtime \
     avnu-gptp \
     mc10baset1s \
+    bridge-utils \
     ${CORE_IMAGE_EXTRA_INSTALL} \
     "
 
